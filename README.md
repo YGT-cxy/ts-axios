@@ -1,2 +1,2 @@
 # ts-axios
-ts重构axios库
+使用TypeScript重构axios库
