@@ -1,17 +1,25 @@
 // methods请求的方式
-export type Methods = 'get' | 'GET'
-  | 'delete' | 'DELETE'
-  | 'post' | 'POST'
-  | 'head' | 'HEAD'
-  | 'options' | 'OPTIONS'
-  | 'put' | 'PUT'
-  | 'patch' | 'PATCH'
+export type Methods =
+  | 'get'
+  | 'GET'
+  | 'delete'
+  | 'DELETE'
+  | 'post'
+  | 'POST'
+  | 'head'
+  | 'HEAD'
+  | 'options'
+  | 'OPTIONS'
+  | 'put'
+  | 'PUT'
+  | 'patch'
+  | 'PATCH'
 
 /**
  * reqeust请求配置
  */
 export interface AxiosRequestConfig {
-  url: string // 请求的地址
+  url?: string // 请求的地址
   method?: Methods // 请求的方式
   data?: any // post等请求的data数据
   params?: any // params参数，用于get等请求，拼接在url后面
@@ -46,4 +54,25 @@ export interface AxiosError extends Error {
   code?: string | null // 状态码
   request?: any // request实例本身
   response?: AxiosResponse // 响应体
+}
+
+export interface Axios {
+  request(config: AxiosRequestConfig): AxiosPromise
+
+  get(url: string, config?: AxiosRequestConfig): AxiosPromise
+  delete(url: string, config?: AxiosRequestConfig): AxiosPromise
+  head(url: string, config?: AxiosRequestConfig): AxiosPromise
+  options(url: string, config?: AxiosRequestConfig): AxiosPromise
+
+  post(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+  put(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+  patch(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+}
+
+export interface AxiosInstance extends Axios {
+  // 利用重载
+
+  (config: AxiosRequestConfig): AxiosPromise
+
+  (url: string, config?: AxiosRequestConfig): AxiosPromise
 }

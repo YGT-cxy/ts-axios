@@ -31,3 +31,15 @@ export const isObject = (val: any): val is Object => {
 export const isPlainObject = (val: any): val is Object => {
   return toString.call(val) === '[object Object]'
 }
+
+/**
+ * 将被拷贝的对象里的属性和方法拷贝到目标对象中
+ * @param to 拷贝的目标对象
+ * @param from 被拷贝的目标对象
+ */
+export const extend = <T, U>(to: T, from: U): T & U => {
+  for (let prototype in from) {
+    ;(to as T & U)[prototype] = from[prototype] as any
+  }
+  return to as T & U
+}

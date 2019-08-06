@@ -10,13 +10,14 @@ export function normalizeHeaderName(headers: any, normalizedName: string): void 
     return
   }
 
+  // 通过Object.keys获取对象中的所有key值，再通过forEach遍历循环每一个key
   Object.keys(headers).forEach((key: string): void => {
+    // 判断当前的header的key和对比的heade的key不相同，且两者转为小写后两者皆相同
     if (key !== normalizedName && key.toUpperCase() === normalizedName.toUpperCase()) {
       headers[normalizedName] = headers[key]
       delete headers[key]
     }
   })
-
 }
 
 /**
@@ -28,7 +29,7 @@ export function processHeaders(headers: any, data: any): any {
   normalizeHeaderName(headers, 'Content-Type')
   if (isPlainObject(data)) {
     if (headers && !headers['Content-Type']) {
-      headers['Content-Type'] = 'application/json;charsert=utf-8'
+      headers['Content-Type'] = 'application/json; charsert=utf-8'
     }
   }
 

@@ -1,6 +1,6 @@
 import { AxiosRequestConfig, AxiosResponse } from './../types'
 
-// AxiosError参数集合
+// AxiosError参数集合接口
 interface AxiosErrorArgs {
   message: string // Error的报错信息
   config: AxiosRequestConfig // request的config配置项
@@ -9,6 +9,7 @@ interface AxiosErrorArgs {
   response?: AxiosResponse // 响应体
 }
 
+// request请求响应出错类
 class AxiosError extends Error {
   isAxiosError: boolean
   config: AxiosRequestConfig

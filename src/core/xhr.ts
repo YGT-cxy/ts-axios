@@ -1,11 +1,11 @@
-import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types/index'
-import { parseHeaders } from './helpers/headers'
-import { createError } from './helpers/error'
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './../types/index'
+import { parseHeaders } from './../helpers/headers'
+import { createError } from './../helpers/error'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
     // 解构赋值
-    const {url, method = 'get', data = null, headers, responseType, timeout } = config
+    const { url, method = 'get', data = null, headers, responseType, timeout } = config
     const request = new XMLHttpRequest()
 
     // 设置响应数据的格式
@@ -24,18 +24,20 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         resolve(response)
       } else {
         // reject(new Error(`Request failed with status code ${response.status}`))
-        reject(createError({
-          message: `Request failed with status code ${response.status}`,
-          config,
-          code: null,
-          request,
-          response
-        }))
+        reject(
+          createError({
+            message: `Request failed with status code ${response.status}`,
+            config,
+            code: null,
+            request,
+            response
+          })
+        )
       }
     }
 
     // 打开request请求
-    request.open(method.toUpperCase(), url)
+    request.open(method.toUpperCase(), url!)
 
     request.onreadystatechange = function handleLoad() {
       if (request.readyState !== 4) {
@@ -49,7 +51,8 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       // console.log(request.getAllResponseHeaders())
       const responseHeaders = parseHeaders(request.getAllResponseHeaders())
 
-      const responseData = responseType && responseType !== 'text' ? request.response : request.responseText
+      const responseData =
+        responseType && responseType !== 'text' ? request.response : request.responseText
       const response: AxiosResponse = {
         data: responseData,
         status: request.status,
@@ -66,23 +69,27 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     // 网络出错
     request.onerror = function handleError() {
       // reject(new Error('Network Error'))
-      reject(createError({
-        message: 'Network Error',
-        config,
-        code: null,
-        request
-      }))
+      reject(
+        createError({
+          message: 'Network Error',
+          config,
+          code: null,
+          request
+        })
+      )
     }
 
     // 请求超时
     request.ontimeout = function handleTimeout() {
       // reject(new Error(`Timeout of ${timeout} ms exceeded`))
-      reject(createError({
-        message: `Timeout of ${timeout} ms exceeded`,
-        config,
-        code: 'ECONNABORTED',
-        request
-      }))
+      reject(
+        createError({
+          message: `Timeout of ${timeout} ms exceeded`,
+          config,
+          code: 'ECONNABORTED',
+          request
+        })
+      )
     }
 
     // 给XMLHttpRequest请求添加header
