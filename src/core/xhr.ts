@@ -94,10 +94,12 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
 
     // 给XMLHttpRequest请求添加header
     Object.keys(headers).forEach((key: string): void => {
+      // 处理不传入data对content-type的处理，因为没有data数据，所以可以不需要传这个header
       if (!data && key.toLowerCase() === 'content-type') {
         delete headers[name]
       } else {
         request.setRequestHeader(key, headers[key])
+        request.setRequestHeader('content', '56552134')
       }
     })
 
