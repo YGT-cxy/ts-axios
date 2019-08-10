@@ -43,3 +43,31 @@ export const extend = <T, U>(to: T, from: U): T & U => {
   }
   return to as T & U
 }
+
+/**
+ * 深度拷贝对象
+ * @param objs 接受需要拷贝的对象，有相同key时后者覆盖前者，使用...接受不定个数的拷贝对象
+ */
+export const deepMerge = (...objs: any[]): any => {
+  const result = Object.create(null)
+
+  objs.forEach(obj => {
+    if (obj) {
+      Object.keys(obj).forEach(key => {
+        const val = obj[key]
+
+        if (isPlainObject(val)) {
+          if (isPlainObject(result[key])) {
+            result[key] = deepMerge(result[key], val)
+          } else {
+            result[key] = deepMerge(val)
+          }
+        } else {
+          result[key] = val
+        }
+      })
+    }
+  })
+
+  return result
+}

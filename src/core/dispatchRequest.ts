@@ -2,7 +2,7 @@ import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './../types/inde
 import XHR from './xhr'
 import { buildURL } from './../helpers/url'
 import { transformRequest, transformResponse } from './../helpers/data'
-import { processHeaders } from './../helpers/headers'
+import { processHeaders, flattenHeaders } from './../helpers/headers'
 
 // axios中的核心方法，返回一个XMLHttpRequest请求的Promise方法
 export default function axois(config: AxiosRequestConfig): AxiosPromise {
@@ -20,9 +20,10 @@ export default function axois(config: AxiosRequestConfig): AxiosPromise {
  * @param config request请求的config参数
  */
 function processConfig(config: AxiosRequestConfig): void {
-  config.headers = transformHeader(config)
   config.url = transformURL(config)
+  config.headers = transformHeader(config)
   config.data = transformRequestData(config)
+  config.headers = flattenHeaders(config.headers, config.method!)
 }
 
 /**
