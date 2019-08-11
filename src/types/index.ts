@@ -19,14 +19,46 @@ export type Methods =
  * reqeust请求配置
  */
 export interface AxiosRequestConfig {
-  url?: string // 请求的地址
-  method?: Methods // 请求的方式
-  data?: any // post等请求的data数据
-  params?: any // params参数，用于get等请求，拼接在url后面
-  headers?: any // request的header
-  responseType?: XMLHttpRequestResponseType // 响应的数据格式
-  timeout?: number // 是否设置超时时间，0为不设置超时时间
+  /**
+   * 网络请求的地址
+   */
+  url?: string
+  /**
+   * 请求的方式
+   */
+  method?: Methods
+  /**
+   * xhr.send中携带的data数据，只能用于post、put、patch请求
+   */
+  data?: any
+  /**
+   * params参数，用于get等请求，拼接在url后面
+   */
+  params?: any
+  /**
+   * request的header
+   */
+  headers?: any
+  /**
+   * 响应的数据格式
+   */
+  responseType?: XMLHttpRequestResponseType
+  /**
+   * 是否设置超时时间，0为不设置超时时间
+   */
+  timeout?: number
 
+  /**
+   * request请求前对config的转换处理
+   */
+  transformRequest?: AxiosTransformer | AxiosTransformer[]
+
+  /**
+   * 在reqeust的then或catch返回响应数据前对响应数据进行转换处理
+   */
+  transformResponse?: AxiosTransformer | AxiosTransformer[]
+
+  // 签名
   [propName: string]: any
 }
 
@@ -34,12 +66,30 @@ export interface AxiosRequestConfig {
  * 响应数据体格式
  */
 export interface AxiosResponse {
-  data: any // 响应的data数据
-  status: number // 响应的状态码
-  statusText: string // 响应的文本
-  headers: any // 响应的header
-  config: AxiosRequestConfig // request请求的config配置项
-  request: any // request实例本身
+  /**
+   * 响应的data数据
+   */
+  data: any
+  /**
+   * 响应的状态码
+   */
+  status: number
+  /**
+   * response响应的数据文本
+   */
+  statusText: string
+  /**
+   * response的返回的header
+   */
+  headers: any
+  /**
+   * request请求的config配置项
+   */
+  config: AxiosRequestConfig
+  /**
+   * request实例本身
+   */
+  request: any
 }
 
 /**
@@ -51,22 +101,49 @@ export interface AxiosPromise extends Promise<AxiosResponse> {}
  * 定义reques请求的Error
  */
 export interface AxiosError extends Error {
-  isAxiosError: boolean // 是否为Axios的报错
-  config: AxiosRequestConfig // request请求的config配置项
-  code?: string | null // 状态码
-  request?: any // request实例本身
-  response?: AxiosResponse // 响应体
+  /**
+   * 是否为Axios的报错
+   */
+  isAxiosError: boolean
+  /**
+   * request请求的config配置项
+   */
+  config: AxiosRequestConfig
+  /**
+   * 响应的错误状态码
+   */
+  code?: string | null
+  /**
+   * request实例本身
+   */
+  request?: any
+  /**
+   * 响应体
+   */
+  response?: AxiosResponse
 }
 
-// Axios的方法接口
+/**
+ * Axios的方法接口
+ */
 export interface Axios {
+  /**
+   * 默认配置项
+   */
   defaults: AxiosRequestConfig
 
+  /**
+   * 拦截器
+   */
   interceptors: {
     request: AxiosInterceptorManager<AxiosRequestConfig>
     response: AxiosInterceptorManager<AxiosResponse>
   }
 
+  /**
+   * 发起request请求，是其他方式的请求的基础
+   * @param config 请求的config配置项
+   */
   request(config: AxiosRequestConfig): AxiosPromise
 
   get(url: string, config?: AxiosRequestConfig): AxiosPromise
@@ -79,7 +156,9 @@ export interface Axios {
   patch(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
 }
 
-// Axios对外使用的接口
+/**
+ * Axios对外使用的接口，继承Axios接口
+ */
 export interface AxiosInstance extends Axios {
   // 利用重载
   (config: AxiosRequestConfig): AxiosPromise
@@ -87,19 +166,32 @@ export interface AxiosInstance extends Axios {
   (url: string, config?: AxiosRequestConfig): AxiosPromise
 }
 
-// 拦截器的接口
+/**
+ * 拦截器的泛型接口
+ */
 export interface AxiosInterceptorManager<T> {
   use(resolved: ResolvedFn<T>, rejected?: RejectedFn): number
 
   eject(id: number): void
 }
 
-// 拦截器的resolve接口
+/**
+ * 拦截器的resolve接口
+ */
 export interface ResolvedFn<T> {
   (val: T): T | Promise<T>
 }
 
-// 拦截器的reject接口
+/**
+ * 拦截器的reject接口
+ */
 export interface RejectedFn {
   (error: any): any
+}
+
+/**
+ * config和响应数据的处理
+ */
+export interface AxiosTransformer {
+  (data: any, headers?: any): any
 }

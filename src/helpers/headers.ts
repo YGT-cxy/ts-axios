@@ -34,7 +34,7 @@ export function processHeaders(headers: any, data: any): any {
     }
   }
 
-  return headers
+  // return headers
 }
 
 /**
