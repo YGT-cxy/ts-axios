@@ -20,8 +20,11 @@ export default function dispatchReqeust(config: AxiosRequestConfig): AxiosPromis
  * @param config request请求的config参数
  */
 function processConfig(config: AxiosRequestConfig): void {
+  // 处理url
   config.url = transformURL(config)
+  // 执行所有的transformRequest函数
   config.data = transform(config.data, config.headers, config.transformRequest)
+  // 扁平化处理headers
   config.headers = flattenHeaders(config.headers, config.method!)
 }
 

@@ -57,6 +57,7 @@ export const deepMerge = (...objs: any[]): any => {
         const val = obj[key]
 
         if (isPlainObject(val)) {
+          // 判断是解决result[key]为undefined时，减少一次遍历 -- 优化代码
           if (isPlainObject(result[key])) {
             result[key] = deepMerge(result[key], val)
           } else {

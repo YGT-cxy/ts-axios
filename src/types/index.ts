@@ -49,12 +49,13 @@ export interface AxiosRequestConfig {
   timeout?: number
 
   /**
-   * request请求前对config的转换处理
+   * 允许在请求数据发送到服务器之前对其进行更改
+   * 这只适用于请求方法’PUT’，’POST’和’PATCH’
    */
   transformRequest?: AxiosTransformer | AxiosTransformer[]
 
   /**
-   * 在reqeust的then或catch返回响应数据前对响应数据进行转换处理
+   * 允许在 then / catch之前对响应数据进行更改
    */
   transformResponse?: AxiosTransformer | AxiosTransformer[]
 
@@ -164,6 +165,13 @@ export interface AxiosInstance extends Axios {
   (config: AxiosRequestConfig): AxiosPromise
 
   (url: string, config?: AxiosRequestConfig): AxiosPromise
+}
+
+/**
+ * Axios的静态方法
+ */
+export interface AxiosStatic extends AxiosInstance {
+  create(config: AxiosRequestConfig): AxiosInstance
 }
 
 /**
