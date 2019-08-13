@@ -20,7 +20,7 @@ export default class CancelToken {
       resolvePromise = resolve
     })
 
-    /** 实例方法，取消异步请求 */
+    /** 取消异步请求 */
     executor(message => {
       // 判断该异步请求是否已经执行，已执行则不再执行下面的代码
       if (this.reason) {

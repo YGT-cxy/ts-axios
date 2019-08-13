@@ -7,12 +7,12 @@ import { isArray, isDate, isPlainObject } from './utils'
 export const encode = (val: string): string => {
   return encodeURIComponent(val)
     .replace(/%40/g, '@')
-    .replace(/%3A/ig, ':')
+    .replace(/%3A/gi, ':')
     .replace(/%24/g, '$')
-    .replace(/%2C/ig, ',')
+    .replace(/%2C/gi, ',')
     .replace(/%20/g, '+')
-    .replace(/%5B/ig, '[')
-    .replace(/%5D/ig, ']')
+    .replace(/%5B/gi, '[')
+    .replace(/%5D/gi, ']')
 }
 
 /**
@@ -47,12 +47,11 @@ export function buildURL(url: string, params?: any): string {
     }
 
     values.forEach((val: any): void => {
-
       // 如果值为时间类型，变量后面拼接的是date.toISOString()的结果
       if (isDate(val)) {
         val = val.toISOString()
 
-      // 如果值为对象类型，例：foot: {a: '1234'} => foot={a: '1234'} => encodeURI: foot=%7B%22a%22:%221234%22%7D
+        // 如果值为对象类型，例：foot: {a: '1234'} => foot={a: '1234'} => encodeURI: foot=%7B%22a%22:%221234%22%7D
       } else if (isPlainObject(val)) {
         val = JSON.stringify(val)
       }
@@ -63,7 +62,6 @@ export function buildURL(url: string, params?: any): string {
 
   // 拼接数组，进行序列化
   let serializedParams: string = parts.join('&')
-  console.log(serializedParams)
 
   if (serializedParams) {
     const marskIndex: number = url.indexOf('#')
