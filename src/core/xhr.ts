@@ -5,7 +5,7 @@ import { createError } from './../helpers/error'
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
     // 解构赋值
-    const { url, method = 'get', data = null, headers, responseType, timeout } = config
+    const { url, method = 'get', data = null, headers, responseType, timeout, cancelToken } = config
     const request = new XMLHttpRequest()
 
     // 设置响应数据的格式
@@ -102,6 +102,15 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         request.setRequestHeader('content', '56552134')
       }
     })
+
+    // 异步请求中取消请求
+    if (cancelToken) {
+      // 执行cancelToken异步Promise，修改状态，触发取消异步请求的功能
+      cancelToken.promise.then(reason => {
+        request.abort()
+        reject(reason)
+      })
+    }
 
     // 发送请求
     request.send(data)

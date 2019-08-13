@@ -6,6 +6,7 @@ import transform from './transform'
 
 // axios中的核心方法，返回一个XMLHttpRequest请求的Promise方法
 export default function dispatchReqeust(config: AxiosRequestConfig): AxiosPromise {
+  throwIfCancellationRquested(config)
   processConfig(config)
 
   return XHR(config).then(
@@ -44,4 +45,14 @@ function transformURL(config: AxiosRequestConfig): string {
 function transformResponseData(res: AxiosResponse): AxiosResponse {
   res.data = transform(res.data, res.headers, res.config.transformResponse)
   return res
+}
+
+/**
+ * 判断config里的cancelToken是否已经被使用过，使用过则无法发起request请求
+ * @param config request的config配置
+ */
+function throwIfCancellationRquested(config: AxiosRequestConfig): void {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested()
+  }
 }
