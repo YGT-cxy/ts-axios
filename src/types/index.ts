@@ -67,6 +67,12 @@ export interface AxiosRequestConfig {
   /** 是否发送跨域的 */
   withCredentials?: boolean
 
+  /** XSRF的cookie的name */
+  xsrfCookieName?: string
+
+  /** XSRF发送的header的name */
+  xsrfHeaderName?: string
+
   // 签名
   [propName: string]: any
 }

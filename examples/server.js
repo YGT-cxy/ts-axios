@@ -4,6 +4,7 @@ const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const WebpackConfig = require('./webpack.config')
+const cookieParser = require('cookie-parser')
 
 require('./server2')
 
@@ -18,8 +19,15 @@ app.use(webpackDevMiddleware(compiler, {
   }
 }))
 
+app.use(express.static(__dirname, {
+  setHeaders (res) {
+    res.cookie('XSRF-TOKEN-D', 'server-token-1234abc')
+  }
+}))
+
 var allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Credentials', true)
   res.header('Access-Control-Allow-Methods', '*')
   res.header('Access-Control-Allow-Headers', '*')
   next()
@@ -32,6 +40,7 @@ app.use(express.static(__dirname))
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieParser())
 
 const router = express.Router()
 
@@ -144,12 +153,12 @@ router.post('/cancel/post', function(req, res) {
   }, 1000)
 })
 
+router.get('/more/get', function(req, res) {
+  // console.log(req.cookies)
+  res.json(req.cookies)
+})
 registerMoreRouter()
-
 function registerMoreRouter () {
-  router.get('/more/get', function(req, res) {
-    res.json(req.cookies)
-  })
 
   router.post('/more/upload', function(req, res) {
     console.log(req.body, req.files)

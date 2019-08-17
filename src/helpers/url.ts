@@ -1,6 +1,14 @@
 import { isArray, isDate, isPlainObject } from './utils'
 
 /**
+ * 定义获取url的里的信息接口
+ */
+interface URLOrigin {
+  protocol: string
+  host: string
+}
+
+/**
  * 将字符串进行encodeURIComponent编码，并处理一些不需要编码转义的字符
  * @param val 需要进行编码的字符串
  */
@@ -76,3 +84,29 @@ export function buildURL(url: string, params?: any): string {
 
   return url
 }
+
+/**
+ * 判断是否为同源同域请求
+ * @param requestURL request的url网络请求地址
+ */
+export function isURLSameOrigin(requestURL: string): boolean {
+  const parsedOrigin = resolveURL(requestURL)
+  return (
+    parsedOrigin.protocol === currentOrigin.protocol && parsedOrigin.host === currentOrigin.host
+  )
+}
+
+// 创建一个a链接，通过a的dom方法获取url的域名和协议
+const urlParsingNode = document.createElement('a')
+function resolveURL(url: string): URLOrigin {
+  urlParsingNode.setAttribute('href', url)
+  const { protocol, host } = urlParsingNode
+
+  return {
+    protocol,
+    host
+  }
+}
+
+// 获取当前网址的url
+const currentOrigin = resolveURL(window.location.href)
