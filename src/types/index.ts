@@ -64,6 +64,9 @@ export interface AxiosRequestConfig {
    */
   cancelToken?: CancelToken
 
+  /** 是否发送跨域的 */
+  withCredentials?: boolean
+
   // 签名
   [propName: string]: any
 }

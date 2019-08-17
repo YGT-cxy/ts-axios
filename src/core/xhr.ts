@@ -5,7 +5,16 @@ import { createError } from './../helpers/error'
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
     // 解构赋值
-    const { url, method = 'get', data = null, headers, responseType, timeout, cancelToken } = config
+    const {
+      url,
+      method = 'get',
+      data = null,
+      headers,
+      responseType,
+      timeout,
+      cancelToken,
+      withCredentials
+    } = config
     const request = new XMLHttpRequest()
 
     // 设置响应数据的格式
@@ -34,6 +43,11 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
           })
         )
       }
+    }
+
+    // 设置withCredentials跨越请求
+    if (withCredentials) {
+      request.withCredentials = withCredentials
     }
 
     // 打开request请求
