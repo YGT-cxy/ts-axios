@@ -33,6 +33,14 @@ export const isPlainObject = (val: any): val is Object => {
 }
 
 /**
+ * 返回一个布尔值判断当前传入的变量是否为FormData类型对象
+ * @param val 需要判断是否为FormData对象的变量
+ */
+export const isFormData = (val: any): val is FormData => {
+  return typeof val !== 'undefined' && val instanceof FormData
+}
+
+/**
  * 将被拷贝的对象里的属性和方法拷贝到目标对象中
  * @param to 拷贝的目标对象
  * @param from 被拷贝的目标对象

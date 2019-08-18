@@ -73,6 +73,12 @@ export interface AxiosRequestConfig {
   /** XSRF发送的header的name */
   xsrfHeaderName?: string
 
+  /** 监听下载的进度事件 */
+  onDownloadProgress?: (e: ProgressEvent) => void
+
+  /** 监听上传的进度事件 */
+  onUploadProgress?: (e: ProgressEvent) => void
+
   // 签名
   [propName: string]: any
 }
