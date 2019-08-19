@@ -191,7 +191,7 @@ export interface AxiosInstance extends Axios {
  * Axios的静态方法
  */
 export interface AxiosStatic extends AxiosInstance {
-  create(config: AxiosRequestConfig): AxiosInstance
+  create(config?: AxiosRequestConfig): AxiosInstance
 
   CancelToken: CancelTokenStatic
   Cancel: CancelStatic
