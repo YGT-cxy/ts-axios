@@ -79,6 +79,9 @@ export interface AxiosRequestConfig {
   /** 监听上传的进度事件 */
   onUploadProgress?: (e: ProgressEvent) => void
 
+  /** http授权 */
+  auth?: AxiosBasicCredentials
+
   // 签名
   [propName: string]: any
 }
@@ -283,4 +286,10 @@ export interface Cancel {
 /** Cancel类类型的接口定义 */
 export interface CancelStatic {
   new (message?: string): Cancel
+}
+
+/** http授权 */
+export interface AxiosBasicCredentials {
+  username: string
+  password: string
 }

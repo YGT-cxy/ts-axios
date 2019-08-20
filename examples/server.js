@@ -5,6 +5,9 @@ const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const WebpackConfig = require('./webpack.config')
 const cookieParser = require('cookie-parser')
+const path = require('path')
+const atob = require('atob')
+const multipart = require('connect-multiparty')
 
 require('./server2')
 

@@ -58,7 +58,7 @@ stratKeysFromVal2.forEach(key => {
 /**
  * 需要deepMergeStrat合并的复合类型对象
  */
-const stratKeysDeepMerge = ['headers']
+const stratKeysDeepMerge = ['headers', 'auth']
 
 /**
  * 分配方法
