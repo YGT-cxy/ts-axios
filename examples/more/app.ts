@@ -150,18 +150,22 @@ import NProgress from 'nprogress'
 //   console.log(res)
 // })
 
+// baseURL绝对地址
 const instance = axios.create({
   baseURL: 'https://img.mukewang.com/'
 })
+
+console.log(instance)
 
 instance.get('5cc01a7b0001a33718720632.jpg')
 
 instance.get('https://img.mukewang.com/szimg/5becd5ad0001b89306000338-360-202.jpg')
 
-// function getA() {
-//   return axios.get('/more/A')
-// }
+function getA() {
+  return axios.get('/more/A')
+}
 
+// 静态方法方法
 // function getB() {
 //   return axios.get('/more/B')
 // }

@@ -111,8 +111,12 @@ export function isURLSameOrigin(requestURL: string): boolean {
   )
 }
 
-// 创建一个a链接，通过a的dom方法获取url的域名和协议
+/** 创建一个a链接，通过a的dom方法获取url的域名和协议 */
 const urlParsingNode = document.createElement('a')
+/**
+ * 通过a的dom方法获取url的域名和协议
+ * @param url 网络地址
+ */
 function resolveURL(url: string): URLOrigin {
   urlParsingNode.setAttribute('href', url)
   const { protocol, host } = urlParsingNode
@@ -123,5 +127,22 @@ function resolveURL(url: string): URLOrigin {
   }
 }
 
-// 获取当前网址的url
+/** 获取当前网址的url */
 const currentOrigin = resolveURL(window.location.href)
+
+/**
+ * 判断传入的URL是否为绝对的
+ * @param requestURL request的URL
+ */
+export function isAbsoluteURL(requestURL: string): boolean {
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(requestURL)
+}
+
+/**
+ * 拼接绝对地址和相对地址成为一个地址
+ * @param baseURL 网络请求的绝对地址
+ * @param relativeURL 网络请求的相对地址
+ */
+export function combineURLs(baseURL: string, relativeURL?: string): string {
+  return relativeURL ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') : baseURL
+}
