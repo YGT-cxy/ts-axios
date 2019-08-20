@@ -82,6 +82,9 @@ export interface AxiosRequestConfig {
   /** http授权 */
   auth?: AxiosBasicCredentials
 
+  /** 合法状态码 */
+  validateStatus?: (status: number) => boolean
+
   // 签名
   [propName: string]: any
 }
