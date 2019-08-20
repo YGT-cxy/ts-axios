@@ -33,7 +33,7 @@ function processConfig(config: AxiosRequestConfig): void {
  * 处理config参数中的url和params参数对象，将两者拼接在一起，返回一个拼接后的字符串
  * @param config reqeust请求的config参数
  */
-function transformURL(config: AxiosRequestConfig): string {
+export function transformURL(config: AxiosRequestConfig): string {
   let { url, params, paramsSerializer, baseURL } = config
   // 当绝对地址存在，且url不是绝对地址，拼接两个字符串地址为一个字符串地址
   if (baseURL && !isAbsoluteURL(url!)) {

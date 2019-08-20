@@ -198,6 +198,11 @@ export interface AxiosInstance extends Axios {
   (url: string, config?: AxiosRequestConfig): AxiosPromise
 }
 
+/** Axios类接口 */
+export interface AxiosClassStatic {
+  new (config: AxiosRequestConfig): Axios
+}
+
 /**
  * Axios的静态方法
  */
@@ -207,6 +212,10 @@ export interface AxiosStatic extends AxiosInstance {
   CancelToken: CancelTokenStatic
   Cancel: CancelStatic
   isCancel: (val: any) => boolean
+
+  all<T>(promises: Array<T | Promise<T>>): Promise<T[]>
+  spread<T, R>(callback: (...args: T[]) => R): (arr: T[]) => R
+  Axios: AxiosClassStatic
 }
 
 /**
