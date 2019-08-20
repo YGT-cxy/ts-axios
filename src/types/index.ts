@@ -19,6 +19,8 @@ export type Methods =
  * reqeust请求配置
  */
 export interface AxiosRequestConfig {
+  /** 网络请求根域名 */
+  baseURL?: string
   /**
    * 网络请求的地址
    */
@@ -84,6 +86,9 @@ export interface AxiosRequestConfig {
 
   /** 合法状态码 */
   validateStatus?: (status: number) => boolean
+
+  /** params处理函数 */
+  paramsSerializer?: (params: any) => string
 
   // 签名
   [propName: string]: any

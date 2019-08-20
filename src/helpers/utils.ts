@@ -41,6 +41,14 @@ export const isFormData = (val: any): val is FormData => {
 }
 
 /**
+ * 返回一个布尔值判断当前传入的变量是否为URLSearchParams类型对象
+ * @param val 需要判断是否为URLSearchParams对象的变量
+ */
+export const isURLSearchParams = (val: any): val is URLSearchParams => {
+  return typeof val !== 'undefined' && val instanceof URLSearchParams
+}
+
+/**
  * 将被拷贝的对象里的属性和方法拷贝到目标对象中
  * @param to 拷贝的目标对象
  * @param from 被拷贝的目标对象

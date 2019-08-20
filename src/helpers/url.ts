@@ -1,4 +1,4 @@
-import { isArray, isDate, isPlainObject } from './utils'
+import { isArray, isDate, isPlainObject, isURLSearchParams } from './utils'
 
 /**
  * 定义获取url的里的信息接口
@@ -28,48 +28,63 @@ export const encode = (val: string): string => {
  * @param url 被拼接的url字符串
  * @param params 需要拼接到url字符串后面的参数对象
  */
-export function buildURL(url: string, params?: any): string {
+export function buildURL(
+  url: string,
+  params?: any,
+  paramsSerializer?: (params: any) => string
+): string {
   // 不传入params参数直接返回url
   if (!params) {
     return url
   }
 
-  const parts: string[] = []
+  let serializedParams: string
 
-  // 遍历params对象里的所有键值对
-  Object.keys(params).forEach((key: string): void => {
-    const val: any = params[key]
-    // 如果对象的值为null或undefined，则忽略跳过，不处理
-    if (val === null || typeof val === 'undefined') {
-      return
-    }
+  // 判断是否有处理params的方法传入
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params)
+    // params为URLSearchParams类型对象
+  } else if (isURLSearchParams(params)) {
+    serializedParams = params.toString()
+    // 使用默认的处理规则
+  } else {
+    const parts: string[] = []
 
-    let values: any[] = []
-
-    // 如果对象的值为数组类型，例：foot: ['a', 'b'] => foot[]=a&foot[]=b
-    if (isArray(val)) {
-      values = val
-      key += '[]'
-    } else {
-      values = [val]
-    }
-
-    values.forEach((val: any): void => {
-      // 如果值为时间类型，变量后面拼接的是date.toISOString()的结果
-      if (isDate(val)) {
-        val = val.toISOString()
-
-        // 如果值为对象类型，例：foot: {a: '1234'} => foot={a: '1234'} => encodeURI: foot=%7B%22a%22:%221234%22%7D
-      } else if (isPlainObject(val)) {
-        val = JSON.stringify(val)
+    // 遍历params对象里的所有键值对
+    Object.keys(params).forEach((key: string): void => {
+      const val: any = params[key]
+      // 如果对象的值为null或undefined，则忽略跳过，不处理
+      if (val === null || typeof val === 'undefined') {
+        return
       }
 
-      parts.push(`${encode(key)}=${encode(val)}`)
-    })
-  })
+      let values: any[] = []
 
-  // 拼接数组，进行序列化
-  let serializedParams: string = parts.join('&')
+      // 如果对象的值为数组类型，例：foot: ['a', 'b'] => foot[]=a&foot[]=b
+      if (isArray(val)) {
+        values = val
+        key += '[]'
+      } else {
+        values = [val]
+      }
+
+      values.forEach((val: any): void => {
+        // 如果值为时间类型，变量后面拼接的是date.toISOString()的结果
+        if (isDate(val)) {
+          val = val.toISOString()
+
+          // 如果值为对象类型，例：foot: {a: '1234'} => foot={a: '1234'} => encodeURI: foot=%7B%22a%22:%221234%22%7D
+        } else if (isPlainObject(val)) {
+          val = JSON.stringify(val)
+        }
+
+        parts.push(`${encode(key)}=${encode(val)}`)
+      })
+    })
+
+    // 拼接数组，进行序列化
+    serializedParams = parts.join('&')
+  }
 
   if (serializedParams) {
     const marskIndex: number = url.indexOf('#')
