@@ -30,11 +30,11 @@ export function processHeaders(headers: any, data: any): any {
   normalizeHeaderName(headers, 'Content-Type')
   if (isPlainObject(data)) {
     if (headers && !headers['Content-Type']) {
-      headers['Content-Type'] = 'application/json; charsert=utf-8'
+      headers['Content-Type'] = 'application/json; charset=utf-8'
     }
   }
 
-  // return headers
+  return headers
 }
 
 /**
@@ -51,16 +51,14 @@ export function parseHeaders(headers: string): any {
   // 每一个是通过\r\n来进行换行的，所以通过这个分割
   headers.split('\r\n').forEach((line: string): void => {
     // 分割成键值对
-    let [key, val] = line.split(':')
+    let [key, ...vals] = line.split(':')
     // key值转为小写
     key = key.trim().toLowerCase()
     if (!key) {
       return
     }
 
-    if (val) {
-      val = val.trim()
-    }
+    let val = vals.join(':').trim()
 
     parsed[key] = val
   })
@@ -85,7 +83,16 @@ export function flattenHeaders(headers: any, method: Methods): any {
   /**
    * 需要删除的headers里的key值
    */
-  const methodsToDelete = ['delete', 'get', 'head', 'options', 'post', 'put', 'patch', 'common']
+  const methodsToDelete: string[] = [
+    'delete',
+    'get',
+    'head',
+    'options',
+    'post',
+    'put',
+    'patch',
+    'common'
+  ]
   // 删除不必要的headers里的键值对
   methodsToDelete.forEach(key => {
     delete headers[key]

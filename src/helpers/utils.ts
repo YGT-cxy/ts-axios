@@ -68,6 +68,7 @@ export const deepMerge = (...objs: any[]): any => {
   const result = Object.create(null)
 
   objs.forEach(obj => {
+    // 当obj为真，即不为空值或空对象时
     if (obj) {
       Object.keys(obj).forEach(key => {
         const val = obj[key]

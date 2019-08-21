@@ -143,6 +143,6 @@ export function isAbsoluteURL(requestURL: string): boolean {
  * @param baseURL 网络请求的绝对地址
  * @param relativeURL 网络请求的相对地址
  */
-export function combineURLs(baseURL: string, relativeURL?: string): string {
+export function combineURL(baseURL: string, relativeURL?: string): string {
   return relativeURL ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') : baseURL
 }

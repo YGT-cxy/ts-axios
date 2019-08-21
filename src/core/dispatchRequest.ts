@@ -1,6 +1,6 @@
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './../types/index'
 import XHR from './xhr'
-import { buildURL, isAbsoluteURL, combineURLs } from './../helpers/url'
+import { buildURL, isAbsoluteURL, combineURL } from './../helpers/url'
 import { flattenHeaders } from './../helpers/headers'
 import transform from './transform'
 
@@ -37,7 +37,7 @@ export function transformURL(config: AxiosRequestConfig): string {
   let { url, params, paramsSerializer, baseURL } = config
   // 当绝对地址存在，且url不是绝对地址，拼接两个字符串地址为一个字符串地址
   if (baseURL && !isAbsoluteURL(url!)) {
-    url = combineURLs(baseURL, url)
+    url = combineURL(baseURL, url)
   }
 
   return buildURL(url!, params, paramsSerializer)
