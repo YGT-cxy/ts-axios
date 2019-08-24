@@ -53,17 +53,6 @@ describe('headers', () => {
     })
   })
 
-  test('如果是对象，应该使用application/json', () => {
-    axios.post('/foo/bar', {
-      firstName: 'foo',
-      lastName: 'bar'
-    })
-
-    return getAjaxRequest().then(request => {
-      testHeaderValue(request.requestHeaders, 'Content-Type', 'application/json; charset=utf-8')
-    })
-  })
-
   test('数据为空，应该删除content-type', () => {
     axios.post('/foo')
 
@@ -88,6 +77,17 @@ describe('headers', () => {
 
     return getAjaxRequest().then(request => {
       testHeaderValue(request.requestHeaders, 'Content-Type', undefined)
+    })
+  })
+
+  test('如果是对象，应该使用application/json', () => {
+    axios.post('/foo/bar', {
+      firstName: 'foo',
+      lastName: 'bar'
+    })
+
+    return getAjaxRequest().then(request => {
+      testHeaderValue(request.requestHeaders, 'Content-Type', 'application/json; charset=utf-8')
     })
   })
 })
