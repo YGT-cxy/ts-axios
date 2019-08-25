@@ -176,7 +176,7 @@ export interface Axios {
    * 发起request请求，是其他方式的请求的基础
    * @param config 请求的config配置项
    */
-  request(config: AxiosRequestConfig): AxiosPromise
+  request(url: any, config?: AxiosRequestConfig): AxiosPromise
 
   get(url: string, config?: AxiosRequestConfig): AxiosPromise
   delete(url: string, config?: AxiosRequestConfig): AxiosPromise

@@ -16,7 +16,7 @@ function defaultStart(val1: any, val2: any): any {
 }
 
 /**
- * 针对特殊的配置项处理合并方法
+ * 针对特殊的配置项处理合并方法，只返回第二个参数，第一个参数不返回
  * @param val1 默认配置项的val值
  * @param val2 自定义配置项的val值
  */
@@ -38,7 +38,7 @@ function deepMergeStrat(val1: any, val2: any): any {
     return val2
   } else if (isPlainObject(val1)) {
     return deepMerge(val1)
-  } else if (typeof val1 !== 'undefined') {
+  } else {
     return val1
   }
 }

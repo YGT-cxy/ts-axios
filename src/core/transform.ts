@@ -14,6 +14,7 @@ export default function transform(
   if (!fns) {
     return data
   }
+  // 统一fns的格式为数组，便于处理
   if (!Array.isArray(fns)) {
     fns = [fns]
   }

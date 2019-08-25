@@ -20,6 +20,29 @@ describe('instance', () => {
     })
   })
 
+  test('测试request请求-带两个参数', () => {
+    axios.request('/request', {
+      method: 'get'
+    })
+
+    return getAjaxRequest().then(request => {
+      expect(request.url).toBe('/request')
+      expect(request.method).toBe('GET')
+    })
+  })
+
+  test('测试request请求-带一个参数', () => {
+    axios.request({
+      url: '/request',
+      method: 'get'
+    })
+
+    return getAjaxRequest().then(request => {
+      expect(request.url).toBe('/request')
+      expect(request.method).toBe('GET')
+    })
+  })
+
   test('测试get请求', () => {
     const instance = axios.create()
 
