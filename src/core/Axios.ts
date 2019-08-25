@@ -135,7 +135,7 @@ export default class Axios {
     url: string,
     config?: AxiosRequestConfig
   ): AxiosPromise {
-    return dispatchRequest(
+    return this.request(
       Object.assign(this.defaults, config || {}, {
         method,
         url
@@ -150,7 +150,7 @@ export default class Axios {
     data?: any,
     config?: AxiosRequestConfig
   ): AxiosPromise {
-    return dispatchRequest(
+    return this.request(
       Object.assign(this.defaults, config || {}, {
         method,
         url,
