@@ -47,7 +47,9 @@ export default class CancelToken {
    * 静态方法：第二种取消异步的方法
    */
   static source(): CancelTokenSource {
+    /** 执行取消异步的方法 */
     let cancel!: Canceler
+    /** 取消异步实例 */
     const token = new CancelToken(c => {
       cancel = c
     })

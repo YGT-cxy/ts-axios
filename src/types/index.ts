@@ -292,11 +292,13 @@ export interface CancelTokenSource {
 /** CancelToken的类类型 */
 export interface CancelTokenStatic {
   new (executor: CancelExecutor): CancelToken
+  /** 取消异步请求的静态方法 */
   source(): CancelTokenSource
 }
 
 /** Cancel实例类型接口 */
 export interface Cancel {
+  /** 原因 */
   message?: string
 }
 

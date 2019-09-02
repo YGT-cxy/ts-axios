@@ -1,5 +1,5 @@
 /**
- * 取消request请求的Cancel信息类
+ * 取消request请求原因的Cancel类
  */
 export default class Cancel {
   /** 取消原因 */
