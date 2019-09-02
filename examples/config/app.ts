@@ -77,3 +77,25 @@ import qs from 'qs'
 // a.then(res => {
 //   console.log(res.data)
 // })
+
+
+const instance = axios.create({
+  headers: {
+    common: {
+      'X-COMMON-HEADER': 'commonHeaderValue'
+    },
+    get: {
+      'X-GET-HEADER': 'getHeaderValue'
+    },
+    post: {
+      'X-POST-HEADER': 'postHeaderValue'
+    }
+  }
+})
+
+instance.get('/foo', {
+  headers: {
+    'X-FOO-HEADER': 'fooHeaderValue',
+    'X-BAR-HEADER': 'barHeaderValue'
+  }
+})

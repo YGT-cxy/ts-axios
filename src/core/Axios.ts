@@ -9,6 +9,7 @@ import {
 import dispatchRequest, { transformURL } from './dispatchRequest'
 import InterceptorManager from './InterceptorManager'
 import mergeConfig from './mergeConfig'
+import { flattenHeaders } from './../helpers/headers'
 
 // request和response拦截器对象接口
 interface Interceptors {
@@ -136,7 +137,7 @@ export default class Axios {
     config?: AxiosRequestConfig
   ): AxiosPromise {
     return this.request(
-      Object.assign(this.defaults, config || {}, {
+      Object.assign(config || {}, {
         method,
         url
       })
@@ -151,7 +152,7 @@ export default class Axios {
     config?: AxiosRequestConfig
   ): AxiosPromise {
     return this.request(
-      Object.assign(this.defaults, config || {}, {
+      Object.assign(config || {}, {
         method,
         url,
         data

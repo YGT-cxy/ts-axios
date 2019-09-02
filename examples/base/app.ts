@@ -90,6 +90,27 @@ axios({
 
 */
 
+axios({
+  method: 'get',
+  url: '/base/get',
+  params: {
+    foo: {
+      bar: {
+        a: 12,
+        b: {
+          aa: 11,
+          bb: {
+            bbb: 111
+          }
+        }
+      }
+    }
+  }
+}).then(res => {
+  console.log(res.data.foo)
+  console.log(JSON.parse(res.data.foo))
+})
+
 // data数据的处理
 // axios({
 //   method: 'post',
@@ -139,29 +160,29 @@ axios({
 // })
 
 // 测试响应数据
-axios({
-  method: 'post',
-  url: '/base/post',
-  data: {
-    a: 1,
-    b: 2
-  }
-}).then((res) => {
-  console.log(res)
-}).catch(err => {
-  console.log(err)
-})
+// axios({
+//   method: 'post',
+//   url: '/base/post',
+//   data: {
+//     a: 1,
+//     b: 2
+//   }
+// }).then((res) => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
 
-axios({
-  method: 'post',
-  url: '/base/post',
-  responseType: 'json',
-  data: {
-    a: 3,
-    b: 4
-  }
-}).then((res) => {
-  console.log(res)
-}).catch(err => {
-  console.log(err)
-})
+// axios({
+//   method: 'post',
+//   url: '/base/post',
+//   responseType: 'json',
+//   data: {
+//     a: 3,
+//     b: 4
+//   }
+// }).then((res) => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
