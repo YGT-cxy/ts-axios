@@ -17,6 +17,7 @@ describe('instance', () => {
 
     return getAjaxRequest().then(request => {
       expect(request.url).toBe('/foot')
+      expect(request.method).toBe('GET')
     })
   })
 
@@ -126,7 +127,9 @@ describe('instance', () => {
       timeout: 3000
     })
 
-    instance.get('/get')
+    instance.get('/get').catch(res => {
+      console.log(res)
+    })
 
     return getAjaxRequest().then(request => {
       expect(request.timeout).toBe(3000)

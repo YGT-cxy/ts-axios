@@ -10,7 +10,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     // 解构赋值
     const {
       url,
-      method = 'get',
+      method,
       data = null,
       headers = {},
       responseType,
@@ -61,7 +61,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
 
     // 打开request请求
-    request.open(method.toUpperCase(), url!)
+    request.open(method!.toUpperCase(), url!)
 
     request.onreadystatechange = function handleLoad() {
       if (request.readyState !== 4) {
@@ -151,7 +151,6 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         delete headers[name]
       } else {
         request.setRequestHeader(key, headers[key])
-        request.setRequestHeader('content', '56552134')
       }
     })
 
