@@ -97,11 +97,11 @@ export interface AxiosRequestConfig {
 /**
  * 响应数据体格式
  */
-export interface AxiosResponse {
+export interface AxiosResponse<T = any> {
   /**
    * 响应的data数据
    */
-  data: any
+  data: T
   /**
    * 响应的状态码
    */
@@ -127,7 +127,7 @@ export interface AxiosResponse {
 /**
  * 返回一个Promsie对象
  */
-export interface AxiosPromise extends Promise<AxiosResponse> {}
+export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {}
 
 /**
  * 定义reques请求的Error
@@ -176,16 +176,16 @@ export interface Axios {
    * 发起request请求，是其他方式的请求的基础
    * @param config 请求的config配置项
    */
-  request(url: any, config?: AxiosRequestConfig): AxiosPromise
+  request<T = any>(url: any, config?: AxiosRequestConfig): AxiosPromise<T>
 
-  get(url: string, config?: AxiosRequestConfig): AxiosPromise
-  delete(url: string, config?: AxiosRequestConfig): AxiosPromise
-  head(url: string, config?: AxiosRequestConfig): AxiosPromise
-  options(url: string, config?: AxiosRequestConfig): AxiosPromise
+  get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
+  delete<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
+  head<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
+  options<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 
-  post(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
-  put(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
-  patch(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+  post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
+  put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
+  patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
 /**
@@ -193,9 +193,9 @@ export interface Axios {
  */
 export interface AxiosInstance extends Axios {
   // 利用重载
-  (config: AxiosRequestConfig): AxiosPromise
+  <T = any>(config: AxiosRequestConfig): AxiosPromise<T>
 
-  (url: string, config?: AxiosRequestConfig): AxiosPromise
+  <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
 /** Axios类接口 */
